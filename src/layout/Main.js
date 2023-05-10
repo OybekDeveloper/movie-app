@@ -10,7 +10,7 @@ export default class Main extends React.Component {
   };
 
   componentDidMount() {
-    fetch("http://www.omdbapi.com/?apikey=95f5752b&s=panda")
+    fetch("http://www.omdbapi.com/?apikey=95f5752b&s=Harry Potter")
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
