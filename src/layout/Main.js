@@ -10,7 +10,7 @@ export default class Main extends React.Component {
   };
 
   componentDidMount() {
-    fetch("http://www.omdbapi.com/?apikey=95f5752b&s=Harry Potter")
+    fetch("https://www.omdbapi.com/?apikey=95f5752b&s=iron")
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
@@ -22,7 +22,7 @@ export default class Main extends React.Component {
   searchMovies = (str, type = "all") => {
     this.setState({loading:true})
     fetch(
-      `http://www.omdbapi.com/?apikey=95f5752b&s=${str}${
+      `https://www.omdbapi.com/?apikey=95f5752b&s=${str}${
         type !== "all" ? `&type=${type}` : ""
       }`
     )

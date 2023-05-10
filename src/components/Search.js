@@ -2,7 +2,7 @@ import React from "react";
 
 export default class Search extends React.Component {
   state = {
-    search: 'Harry Potter',
+    search: 'iron',
     type: "all",
   };
   
