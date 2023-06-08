@@ -1,26 +1,28 @@
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import Movies from "../components/Movies";
 import Loader from "../components/Loader";
 import Search from "../components/Search";
 
-export default class Main extends React.Component {
-  state = {
-    movies: [],
-    loading:true
-  };
+export default function Main () {
 
-  componentDidMount() {
+  const [movies,setMovies]=useState([]);
+  const [loading,setLoading]=useState(true);
+
+
+  useEffect(()=>{
     fetch("https://www.omdbapi.com/?apikey=95f5752b&s=iron")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.Search) {
-          this.setState({ movies: data.Search , loading:false });
-        }
-      });
-  }
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.Search) {
+        setLoading(false);
+        setMovies(data.Search)
+      }
+    });
+  },[])
 
-  searchMovies = (str, type = "all") => {
-    this.setState({loading:true})
+
+  const searchMovies = (str, type = "all") => {
+    setLoading(true)
     fetch(
       `https://www.omdbapi.com/?apikey=95f5752b&s=${str}${
         type !== "all" ? `&type=${type}` : ""
@@ -29,23 +31,24 @@ export default class Main extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if (data.Search) {
-          this.setState({ movies: data.Search ,loading: false });
+          setMovies(data.Search);
+          setLoading(false)
         } else {
-          this.setState({ movies: [] ,loading:false});
+          setMovies([]);
+          setLoading(false);
         }
       });
   };
 
-  render() {
     return (
       <div className="container main">
-        <Search searchMovies={this.searchMovies} />
-        {this.state.loading ? (
+        <Search searchMovies={searchMovies} />
+        {loading ? (
            <Loader />
         ) : (
-         <Movies movies={this.state.movies} />
+         <Movies movies={movies} />
         )}
       </div>
     );
-  }
+  
 }
